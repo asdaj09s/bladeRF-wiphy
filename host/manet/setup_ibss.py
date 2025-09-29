@@ -6,6 +6,7 @@ assigns an IP address, and optionally launches an OLSR routing daemon if one
 is present on the system.  Channel width, multicast/basic rate hints, and a
 regulatory country code can be supplied to make 902–928 MHz IBSS experiments
 more convenient.  The helper codifies the high-level plan captured in
+is present on the system.  It codifies the high-level plan captured in
 ``docs/manet_plan.md`` by providing a repeatable automation entrypoint that can
 be invoked on both bladeRF 2.0 micro xA9 nodes.
 
@@ -123,11 +124,15 @@ def configure_interface(
         "join",
         ssid,
         str(frequency_mhz),
+        codex/research-manet-feature-for-bladerf-a9-communication-1fffmd
         channel_mode,
+        "HT20",
+        experimental
         bssid_value,
         "beacon-interval",
         str(beacon_interval),
     ]
+       codex/research-manet-feature-for-bladerf-a9-communication-1fffmd
     if fixed_frequency:
         join_command.append("fixed-freq")
     if basic_rates:
@@ -135,6 +140,7 @@ def configure_interface(
         join_command.extend(["basic-rates", basic_rate_string])
     if multicast_rate is not None:
         join_command.extend(["mcast-rate", f"{multicast_rate:g}"])
+       experimental
     runner.run(join_command)
 
     runner.run(["ip", "addr", "flush", "dev", interface])
@@ -296,6 +302,7 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         help="Operating frequency in MHz (e.g. 5180)",
     )
     parser.add_argument(
+        codex/research-manet-feature-for-bladerf-a9-communication-1fffmd
         "--channel-mode",
         default="HT20",
         choices=["HT20", "HT40+", "HT40-", "5MHz", "10MHz", "NOHT"],
@@ -319,6 +326,8 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         help="Override the multicast rate in Mbps",
     )
     parser.add_argument(
+
+        experimental
         "--ip",
         required=True,
         help="IPv4 address with prefix length, e.g. 10.23.0.1/24",
@@ -349,10 +358,13 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         help="Transmit power in dBm (requires regulatory permissions)",
     )
     parser.add_argument(
+        codex/research-manet-feature-for-bladerf-a9-communication-1fffmd
         "--country",
         help="Optional two-letter country code for iw reg set",
     )
     parser.add_argument(
+
+        experimental
         "--olsr",
         action="store_true",
         help="Attempt to launch an OLSR/OLSRv2 daemon after joining the IBSS",
@@ -394,19 +406,24 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
 
     runner = CommandRunner(dry_run=args.dry_run)
 
+         codex/research-manet-feature-for-bladerf-a9-communication-1fffmd
     if args.country:
         ensure_tool("iw")
         runner.run(["iw", "reg", "set", args.country.upper()])
 
+
+        experimental
     configure_interface(
         runner,
         interface=args.interface,
         ssid=args.ssid,
         frequency_mhz=args.frequency,
+        codex/research-manet-feature-for-bladerf-a9-communication-1fffmd
         channel_mode=args.channel_mode,
         fixed_frequency=args.fixed_frequency,
         basic_rates=args.basic_rates,
         multicast_rate=args.mcast_rate,
+        experimental
         address=address,
         beacon_interval=args.beacon_interval,
         mtu=args.mtu,
