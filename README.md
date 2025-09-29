@@ -16,6 +16,22 @@ Instructions to compile, install, and run bladeRF-wiphy and tools https://www.nu
 
 Instructions to simulate bladeRF-wiphy: https://www.nuand.com/bladeRF-wiphy-simulation/
 
+### MANET bring-up helpers
+
+This repository now includes host-side tooling that follows the roadmap
+described in [`docs/manet_plan.md`](docs/manet_plan.md) to establish an ad-hoc
+link between two bladeRF-wiphy nodes.  The utilities live under
+[`host/manet`](host/manet) and provide:
+
+- `setup_ibss.py`: Automates joining an IEEE 802.11 IBSS cell, assigns IP
+  addressing, and can optionally launch an OLSR/OLSRv2 routing daemon to begin
+  exchanging MANET control traffic.
+- `hello_daemon.py`: A lightweight UDP neighbor discovery loop that mirrors the
+  NHDP step of the MANET plan, allowing quick validation that both radios see
+  each other once the IBSS link is established.
+
+See [`host/manet/README.md`](host/manet/README.md) for detailed usage examples.
+
 <p align="center">
 <img width="50%" height="50%" src="https://www.nuand.com/wp-content/uploads/2021/01/bw-block-diagram.png">
 </p>

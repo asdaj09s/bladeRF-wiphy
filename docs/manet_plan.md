@@ -54,3 +54,12 @@ A MANET allows two or more bladeRF 2.0 micro xA9 radios to form a decentralized 
 ## External references captured for future study
 
 To keep this repository self-contained, store short excerpts of public-domain/CC-BY sources alongside URLs in `docs/external_sources.md` (added in this change). These cover MANET fundamentals, IEEE 802.11s mesh networking, and candidate routing protocols (OLSR/OLSRv2, NHDP, B.A.T.M.A.N.).
+
+
+## Host tooling status
+
+The initial host automation described in the roadmap has been implemented in
+[`host/manet`](../host/manet). `setup_ibss.py` performs the IBSS configuration
+and optional OLSR bring-up for a pair of nodes, while `hello_daemon.py` provides
+a minimal NHDP-inspired neighbor discovery loop for verifying that the radios
+are exchanging control traffic once the ad-hoc link is active.
