@@ -14,6 +14,13 @@ full-featured routing suite.
 information, configures deterministic BSSID values (unless one is provided), and
 optionally starts an OLSR/OLSRv2 routing daemon once the wireless link is up.
 
+Channel width and rate controls are exposed via `--channel-mode`,
+`--basic-rate`, and `--mcast-rate`, enabling experiments in spectrum-constrained
+bands such as 902–928 MHz.  The helper can also request `iw` to lock the
+frequency (`--fixed-frequency`) and apply a regulatory country code before
+making any other changes (`--country`).
+
+
 Typical usage on each bladeRF host is::
 
     sudo ./setup_ibss.py --interface wlan0 --ssid bladerf-mesh \
@@ -22,7 +29,15 @@ Typical usage on each bladeRF host is::
 The script can also be run in `--dry-run` mode to preview the `iw`/`ip`
 commands it will execute.  When `--olsr` is requested the helper auto-detects an
 available `olsrd2` or `olsrd` binary, generating a throw-away configuration file
+if necessary so that two nodes can immediately exchange routing hellos.  For a
+902 MHz ISM trial with 5 MHz channels, a single node might be configured with::
+
+    sudo ./setup_ibss.py --interface wlan0 --ssid bladerf-mesh-900 \
+        --frequency 904 --channel-mode 5MHz --country US \
+        --ip 10.23.0.1/24 --peer 10.23.0.2
+
 if necessary so that two nodes can immediately exchange routing hellos.
+
 
 ## `hello_daemon.py`
 

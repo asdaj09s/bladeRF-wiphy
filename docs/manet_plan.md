@@ -55,7 +55,6 @@ A MANET allows two or more bladeRF 2.0 micro xA9 radios to form a decentralized 
 
 To keep this repository self-contained, store short excerpts of public-domain/CC-BY sources alongside URLs in `docs/external_sources.md` (added in this change). These cover MANET fundamentals, IEEE 802.11s mesh networking, and candidate routing protocols (OLSR/OLSRv2, NHDP, B.A.T.M.A.N.).
 
-
 ## Host tooling status
 
 The initial host automation described in the roadmap has been implemented in
